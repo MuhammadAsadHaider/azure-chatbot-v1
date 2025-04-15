@@ -177,7 +177,7 @@ const StatusIndicator = styled.div`
   left: 10px;
   padding: 5px 10px;
   border-radius: 4px;
-  background-color: ${props => props.connected ? 'rgba(46, 204, 113, 0.8)' : 'rgba(231, 76, 60, 0.8)'};
+  background-color: ${props => props.$connected ? 'rgba(46, 204, 113, 0.8)' : 'rgba(231, 76, 60, 0.8)'};
   color: white;
   font-size: 0.8rem;
   z-index: 10;
@@ -427,11 +427,11 @@ export const ChatInterface = ({ config, endSession }) => {
       <ContentArea>
         <VideoContainer>
           {status === 'connecting' || status === 'reconnecting' ? (
-            <StatusIndicator connected={false}>
+            <StatusIndicator $connected={false}>
               {status === 'connecting' ? 'Connecting...' : 'Reconnecting...'}
             </StatusIndicator>
           ) : (
-            <StatusIndicator connected={isConnected}>
+            <StatusIndicator $connected={isConnected}>
               {isConnected ? 'Connected' : 'Disconnected'}
             </StatusIndicator>
           )}

@@ -13,7 +13,7 @@ const SectionHeader = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  margin-bottom: ${props => props.isOpen ? '15px' : '5px'};
+  margin-bottom: ${props => props.$isOpen ? '15px' : '5px'};
   padding-bottom: 5px;
   border-bottom: 1px solid #eee;
   
@@ -115,7 +115,7 @@ export const Configuration = ({ config, setConfig, startSession }) => {
     <ConfigContainer>
       <form onSubmit={handleSubmit}>
         <Section>
-          <SectionHeader isOpen={openSections.speech} onClick={() => toggleSection('speech')}>
+          <SectionHeader $isOpen={openSections.speech} onClick={() => toggleSection('speech')}>
             {openSections.speech ? <FiChevronDown /> : <FiChevronRight />}
             <h2>Azure Speech Resource</h2>
           </SectionHeader>
@@ -181,7 +181,7 @@ export const Configuration = ({ config, setConfig, startSession }) => {
         </Section>
         
         <Section>
-          <SectionHeader isOpen={openSections.stt_tts} onClick={() => toggleSection('stt_tts')}>
+          <SectionHeader $isOpen={openSections.stt_tts} onClick={() => toggleSection('stt_tts')}>
             {openSections.stt_tts ? <FiChevronDown /> : <FiChevronRight />}
             <h2>STT / TTS Configuration</h2>
           </SectionHeader>
@@ -249,7 +249,7 @@ export const Configuration = ({ config, setConfig, startSession }) => {
         </Section>
         
         <Section>
-          <SectionHeader isOpen={openSections.openai} onClick={() => toggleSection('openai')}>
+          <SectionHeader $isOpen={openSections.openai} onClick={() => toggleSection('openai')}>
             {openSections.openai ? <FiChevronDown /> : <FiChevronRight />}
             <h2>Azure OpenAI Resource</h2>
           </SectionHeader>
@@ -321,7 +321,7 @@ export const Configuration = ({ config, setConfig, startSession }) => {
         
         {config.enableOyd && (
           <Section>
-            <SectionHeader isOpen={openSections.cogSearch} onClick={() => toggleSection('cogSearch')}>
+            <SectionHeader $isOpen={openSections.cogSearch} onClick={() => toggleSection('cogSearch')}>
               {openSections.cogSearch ? <FiChevronDown /> : <FiChevronRight />}
               <h2>Azure Cognitive Search Resource</h2>
             </SectionHeader>
@@ -367,7 +367,7 @@ export const Configuration = ({ config, setConfig, startSession }) => {
         )}
         
         <Section>
-          <SectionHeader isOpen={openSections.avatar} onClick={() => toggleSection('avatar')}>
+          <SectionHeader $isOpen={openSections.avatar} onClick={() => toggleSection('avatar')}>
             {openSections.avatar ? <FiChevronDown /> : <FiChevronRight />}
             <h2>Avatar Configuration</h2>
           </SectionHeader>
