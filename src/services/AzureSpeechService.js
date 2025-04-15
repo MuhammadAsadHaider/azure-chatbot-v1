@@ -20,6 +20,7 @@ export class AzureSpeechService {
     this.messages = [];
     this.messageInitiated = false;
     this.dataSources = [];
+    this.isDisposed = false;
   }
 
   // Initialize the messages array
@@ -285,15 +286,43 @@ export class AzureSpeechService {
 
   // Disconnect from the avatar service
   disconnectAvatar() {
-    if (this.avatarSynthesizer !== undefined) {
-      this.avatarSynthesizer.close();
+    if (this.avatarSynthesizer && !this.isDisposed) {
+      try {
+        this.avatarSynthesizer.close();
+      } catch (error) {
+        console.log('Error closing avatarSynthesizer:', error);
+      }
+      this.avatarSynthesizer = undefined;
     }
 
-    if (this.speechRecognizer !== undefined) {
-      this.speechRecognizer.stopContinuousRecognitionAsync();
-      this.speechRecognizer.close();
+    if (this.speechRecognizer && !this.isDisposed) {
+      try {
+        this.speechRecognizer.stopContinuousRecognitionAsync(
+          () => {
+            try {
+              this.speechRecognizer.close();
+            } catch (error) {
+              console.log('Error closing speechRecognizer:', error);
+            }
+            this.speechRecognizer = undefined;
+          },
+          (err) => {
+            console.log('Error stopping continuous recognition:', err);
+            try {
+              this.speechRecognizer.close();
+            } catch (closeError) {
+              console.log('Error closing speechRecognizer after failed stop:', closeError);
+            }
+            this.speechRecognizer = undefined;
+          }
+        );
+      } catch (error) {
+        console.log('Error stopping recognition:', error);
+        this.speechRecognizer = undefined;
+      }
     }
 
+    this.isDisposed = true;
     this.sessionActive = false;
   }
 

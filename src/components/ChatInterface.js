@@ -218,10 +218,8 @@ export const ChatInterface = ({ config, endSession }) => {
       }
     }, 5000);
     
+    // Cleanup function when component unmounts
     return () => {
-      if (speechService.current) {
-        speechService.current.disconnectAvatar();
-      }
       clearInterval(intervalId);
     };
   }, []);
@@ -404,7 +402,11 @@ export const ChatInterface = ({ config, endSession }) => {
   
   const handleEndSession = () => {
     if (speechService.current) {
-      speechService.current.disconnectAvatar();
+      try {
+        speechService.current.disconnectAvatar();
+      } catch (error) {
+        console.error('Error disconnecting avatar:', error);
+      }
     }
     endSession();
   };
